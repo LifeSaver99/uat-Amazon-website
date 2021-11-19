@@ -25,39 +25,72 @@ After({timeout}, async function() {
 
 Given('the {word} page', {timeout}, async function(page) {
     const pages = {
-        'youtube': 'https://www.youtube.com/gaming'
+        'youtube': 'https://amazon.co.uk'
     }
 
     assert((pages[page] != null), 'Page not supported!');
     await this.browserNavigate(pages[page]);
 });
 
-When('the {string} location is searched for', async function(location) {
-    this.text = location;
 
-    const searchInput = await this.getElement('ls-c-search__input-label');
-    const searchSubmit = await this.getElementByCss('[type="submit"].ls-c-search__submit');
+When('the {word} is searched', async function(football) {
+    this.text = football;
 
-    await searchInput.sendKeys(location);
+    const searchInput = await this.getElement('twotabsearchtextbox');
+    const searchSubmit = await this.getElement('nav-search-submit-button');
+
+    await searchInput.sendKeys(football);
     await searchSubmit.click();
-    await this.waitForElementByCss('.wr-c-observations__heading', timeout);
+    // await this.waitForElementByCss('.nav-search-submit-text nav-sprite nav-progressive-attribute', timeout);
 });
 
 Then('the {string} element should be {word}', async function(name, state) {
     const ids = {
-        'location heading': 'wr-location-name-id',
-        'search input': 'search',
-        'search submit': '[type="submit"].ls-c-search__submit'
+        'search submit-button': 'nav-search-submit-button',
+        'search input': 'twotabsearchtextbox',
+        'Sign-in securely': 'a-autoid-0-announce'
     };
 
     const selectors = {
-        'search input': 'getElement'
+        'search input': 'getElement',
+        'Sign-in securely': 'getElement',
+        'search submit-button': 'getElement'
+
     };
 
     const tags = {
-        'location heading': 'h1',
+        'search submit-button': 'input',
         'search input': 'input',
-        'search submit': 'input'
+        'Sign-in securely': 'span'
+    };
+
+    const id = ids[name];
+    const selector = selectors[name];
+    const tag = tags[name];
+
+    assert((id != null), 'Element not supported!');
+    assert((selector != null), 'Selector not supported!');
+    assert((tag != null), 'Tag not supported!');
+
+
+Then('the {string} element should be {word}', async function(name, state) {
+    const ids = {
+        'search submit-button': 'nav-search-submit-button',
+        'search input': 'twotabsearchtextbox',
+        'Sign-in securely': 'a-autoid-0-announce'
+    };
+
+    const selectors = {
+        'search input': 'getElement',
+        'Sign-in securely': 'getElement',
+        'search submit-button': 'getElement'
+
+    };
+
+    const tags = {
+        'search submit-button': 'input',
+        'search input': 'input',
+        'Sign-in securely': 'span'
     };
 
     const id = ids[name];
